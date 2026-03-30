@@ -259,11 +259,13 @@ html, body {
 /* PROGRESS BAR */
 #progress-container {
   width: 80%;
-  height: 25px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 12px;
+  height: 30px;
+  background: rgba(0,0,0,0.3);
+  border: 3px solid #FFD700; /* border keren */
+  border-radius: 15px;
   margin: 10px auto;
   overflow: hidden;
+  box-shadow: 0 0 10px #FFD700 inset; /* inner glow */
 }
 
 #progress-bar {
@@ -271,15 +273,15 @@ html, body {
   height: 100%;
   background: linear-gradient(90deg, #FFD700 0%, #FFC700 50%, #FFD700 100%);
   border-radius: 12px;
-  transition: width 0.2s;
+  transition: width 0.2s ease;
   background-size: 200% 100%;
   animation: gradientMove 1.5s linear infinite;
+  box-shadow: 0 0 10px #FFD700; /* glow effect */
 }
-
 @keyframes gradientMove {
   0% { background-position: 0 0; }
   100% { background-position: -200% 0; }
-}
+  }
 </style>
 </head>
 <body>
