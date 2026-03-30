@@ -185,6 +185,68 @@ html, body {
 #sub-buttons button:hover {
   background: #FFC700;
 }
+#inventory-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 500px;
+  height: 60%;
+  background: rgba(0,0,0,0.9);
+  border: 3px solid #FFD700;
+  border-radius: 15px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+#inventory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#inventory-header h2 {
+  margin: 0;
+  color: #FFD700;
+}
+
+#close-inv {
+  background: red;
+  border: none;
+  color: white;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 2px 8px;
+}
+
+#inv-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+  background: rgba(255,255,255,0.05);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.inv-slot {
+  background: rgba(255,255,255,0.1);
+  border: 2px solid #FFD700;
+  border-radius: 8px;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: white;
+  font-size: 16px;
+    }
 </style>
 </head>
 <body>
@@ -209,9 +271,13 @@ html, body {
   <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
 </div>
   <!-- Tambahkan di bawah div #menu-buttons -->
-<div id="sub-buttons">
-  <button id="sellBtn">🛒 Sell</button>
-  <button id="shopBtn">⛏️ Shop</button>
+<!-- INVENTORY POPUP -->
+<div id="inventory-popup" style="display:none;">
+  <div id="inventory-header">
+    <h2>Inventory</h2>
+    <button id="close-inv">✖</button>
+  </div>
+  <div id="inv-grid"></div>
 </div>
 
 <audio id="hitSound" src="https://github.com/MNEFSID/Mining-Clicker/raw/refs/heads/main/Crack.mp3"></audio>
@@ -257,7 +323,6 @@ const moneyText = document.getElementById("money");
 const levelText = document.getElementById("level");
 const rock = document.getElementById("rock");
 const hitSound = document.getElementById("hitSound");
-const resultText = document.getElementById("result");
 const rockContainer = document.getElementById("rock-container");
 const statusBar = document.getElementById("status");
 const progressBar = document.getElementById("progress-bar");
@@ -330,6 +395,91 @@ rock.onclick = () => {
 
   updateUI();
 };
+// INVENTORY LOGIC
+let inventory = []; // simpan semua item, misal: {type:'stone', qty:1}
+
+const inventoryPopup = document.getElementById("inventory-popup");
+const invGrid = document.getElementById("inv-grid");
+const inventoryBtn = document.querySelector("#menu-buttons button:nth-child(1)");
+const closeInvBtn = document.getElementById("close-inv");
+
+// buka/tutup inventory
+inventoryBtn.onclick = () => {
+  renderInventory();
+  inventoryPopup.style.display = "flex";
+};
+closeInvBtn.onclick = () => inventoryPopup.style.display = "none";
+
+// render inventory
+function renderInventory() {
+  invGrid.innerHTML = "";
+  for (let i = 0; i < 20; i++) {
+    const slot = document.createElement("div");
+    slot.className = "inv-slot";
+    if(inventory[i]) slot.innerText = `${inventory[i].type} x${inventory[i].qty}`;
+    invGrid.appendChild(slot);
+  }
+}
+
+// tambahin stone ke inventory
+function addStoneToInventory() {
+  // cek ada slot stone di inventory
+  let stoneSlot = inventory.find(s => s.type === "stone");
+  if(stoneSlot) {
+    stoneSlot.qty +=1;
+  } else {
+    inventory.push({type:'stone', qty:1});
+  }
+  renderInventory();
+}
+
+// modifikasi rock.onclick
+rock.onclick = () => {
+  stone += 1;
+
+  // floating text
+  const float = document.createElement("div");
+  float.className = "floating-text";
+  float.innerText = "+1 Stone";
+  const rect = rock.getBoundingClientRect();
+  const containerRect = rockContainer.getBoundingClientRect();
+  float.style.left = (rect.left + rect.width/2 - containerRect.left + (Math.random()*30-15)) + "px";
+  float.style.top = (rect.top + rect.height/2 - containerRect.top + (Math.random()*30-15)) + "px";
+  rockContainer.appendChild(float);
+  setTimeout(() => float.remove(), 1000);
+
+  // tambah ke inventory
+  addStoneToInventory();
+
+  // level & reset stone utama
+  const target = getLevelTarget(level+1);
+  if(stone >= target){
+    stone = 0; // reset UI main stone
+    level +=1;
+  }
+
+  rock.classList.add("shake");
+  setTimeout(() => rock.classList.remove("shake"), 200);
+  hitSound.currentTime = 0;
+  hitSound.play();
+
+  // update UI
+  updateUI();
+
+  // simpan inventory & stone & level ke Firebase
+  set(ref(db, 'users/' + uid + '/stone'), stone);
+  set(ref(db, 'users/' + uid + '/level'), level);
+  set(ref(db, 'users/' + uid + '/inventory'), inventory);
+};
+
+// ambil inventory dari firebase saat load
+get(ref(db, 'users/' + uid)).then(snapshot => {
+  if(snapshot.exists()){
+    const data = snapshot.val();
+    inventory = data.inventory || [];
+    renderInventory();
+  }
+});
 
 updateUI();
 </script>
