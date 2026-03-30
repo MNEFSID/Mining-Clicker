@@ -121,7 +121,7 @@ html, body {
   box-shadow: 0 4px #B8860B; /* efek 3D tegas tapi sederhana */
 }
 #menu-buttons button:active {
-  transform: translateY(4px); /* tombol “tekan masuk” */
+  transform: translateY(4px); /* tombol tekan masuk */
   box-shadow: 0 0 #B8860B; /* hilang efek saat ditekan */
 }
 #menu-buttons button:hover {
@@ -246,15 +246,15 @@ html, body {
   font-weight: bold;
   color: white;
   font-size: 16px;
-    }
+  }
 </style>
 </head>
 <body>
 
 <div id="status">
-  <div>🪨 Stone: <span id="stone">0</span></div>
-  <div>💰 $: <span id="money" class="money">0</span></div>
-  <div>⭐ Level: <span id="level">0</span></div>
+  <div> Stone: <span id="stone">0</span></div>
+  <div> $: <span id="money" class="money">0</span></div>
+  <div> Level: <span id="level">0</span></div>
 </div>
 
 <div id="progress-container">
@@ -271,6 +271,10 @@ html, body {
   <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
 </div>
   <!-- Tambahkan di bawah div #menu-buttons -->
+  <div id="sub-buttons">
+  <button id="sellBtn"> Sell</button>
+  <button id="shopBtn"> Shop</button>
+  </div>
 <!-- INVENTORY POPUP -->
 <div id="inventory-popup" style="display:none;">
   <div id="inventory-header">
@@ -323,6 +327,7 @@ const moneyText = document.getElementById("money");
 const levelText = document.getElementById("level");
 const rock = document.getElementById("rock");
 const hitSound = document.getElementById("hitSound");
+const resultText = document.getElementById("result");
 const rockContainer = document.getElementById("rock-container");
 const statusBar = document.getElementById("status");
 const progressBar = document.getElementById("progress-bar");
@@ -393,9 +398,7 @@ rock.onclick = () => {
   set(ref(db, 'users/' + uid + '/stone'), stone);
   set(ref(db, 'users/' + uid + '/level'), level);
 
-  updateUI();
-};
-// INVENTORY LOGIC
+  // INVENTORY LOGIC
 let inventory = []; // simpan semua item, misal: {type:'stone', qty:1}
 
 const inventoryPopup = document.getElementById("inventory-popup");
@@ -480,6 +483,9 @@ get(ref(db, 'users/' + uid)).then(snapshot => {
     renderInventory();
   }
 });
+
+  updateUI();
+};
 
 updateUI();
 </script>
