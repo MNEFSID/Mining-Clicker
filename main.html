@@ -98,79 +98,93 @@ html, body {
   100% { opacity:0; transform:translateY(-50px);}
 }
 
-/* tombol bawah 3D inset */
+<style>
+/* MENU BUTTONS - 1 BARIS ATAS */
 #menu-buttons {
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  margin-top:15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* jarak antar tombol */
+  margin-top: 15px;
 }
 #menu-buttons button {
-  padding:20px 30px;
-  font-size:20px;
-  font-weight:bold;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
-  min-width:140px;
-  color:white;
-  background: #333;
-  box-shadow: inset 0 -4px 6px #111, 0 4px 6px #000;
-  transition: 0.1s;
+  padding: 15px 25px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  min-width: 130px;
+  color: black;
+  background: #FFD700; /* kuning */
+  transform: translateY(0);
+  transition: transform 0.1s, background 0.1s;
+  box-shadow: 0 4px #B8860B; /* efek 3D tegas tapi sederhana */
 }
 #menu-buttons button:active {
-  box-shadow: inset 0 4px 6px #111, 0 2px 3px #000;
-  transform: translateY(2px);
+  transform: translateY(4px); /* tombol “tekan masuk” */
+  box-shadow: 0 0 #B8860B; /* hilang efek saat ditekan */
 }
 #menu-buttons button:hover {
-  background: #444;
+  background: #FFC700;
 }
 
-/* progress bar */
 #progress-container {
-  width:80%;
-  height:25px;
+  width: 80%;
+  height: 25px;
   background: rgba(255,255,255,0.2);
-  border-radius:12px;
-  margin:10px auto;
-  overflow:hidden;
+  border-radius: 12px;
+  margin: 10px auto;
+  overflow: hidden;
 }
+
 #progress-bar {
-  width:0%;
-  height:100%;
-  background: gold;
-  border-radius:12px;
+  width: 0%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    #FFD700,      /* kuning utama */
+    #FFD700 10px,
+    #FFEC8B 10px, /* kuning lebih terang */
+    #FFEC8B 20px
+  );
+  background-size: 40px 40px; /* ukuran pola */
+  animation: moveStripe 1s linear infinite;
+  border-radius: 12px;
   transition: width 0.2s;
 }
 
-/* SUB BUTTONS */
+@keyframes moveStripe {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 0; }
+}
+
+/* SUB BUTTONS - 2 BARIS BAWAH */
 #sub-buttons {
-  display:flex;
-  justify-content:center;
-  gap:8px; /* rapat */
-  margin-top:8px;
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* jarak antar tombol */
+  margin-top: 10px;
 }
 #sub-buttons button {
-  padding:12px 20px;
-  font-size:16px;
-  font-weight:bold;
-  border:none;
-  border-radius:15px;
-  cursor:pointer;
-  min-width:100px;
-  color:white;
-  background:#333;
-  box-shadow: inset 0 -3px 4px #111, 0 3px 4px #000;
-  transition: 0.1s, background 0.2s;
+  padding: 15px 60px; /* tombol lebih lebar supaya mengisi space */
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  color: black;
+  background: #FFD700;
+  transform: translateY(0);
+  transition: transform 0.1s, background 0.1s;
+  box-shadow: 0 4px #B8860B;
 }
 #sub-buttons button:active {
-  box-shadow: inset 0 3px 4px #111, 0 2px 2px #000;
-  transform: translateY(2px);
-  background: gold; /* warna kuning pas dipencet */
+  transform: translateY(4px);
+  box-shadow: 0 0 #B8860B;
 }
 #sub-buttons button:hover {
-  background:#444;
-  }
+  background: #FFC700;
+}
 </style>
 </head>
 <body>
