@@ -18,6 +18,7 @@ html, body {
   background-size: cover;
 }
 
+/* STATUS BAR */
 #status {
   margin:10px auto; /* dikurangi */
   padding:8px 15px; /* dikurangi */
@@ -30,7 +31,6 @@ html, body {
   background: rgba(0,0,0,0.5);
   max-width:600px;
   transition: 0.3s;
-}
 
 #status.level-up {
   border-color: gold;
@@ -97,10 +97,8 @@ html, body {
   100% { opacity:0; transform:translateY(-50px);}
 }
 
-/* STATUS BAR *
-
 /* tombol bawah 3D inset */
-#menu-button {
+#menu-buttons {
   display:flex;
   justify-content:center;
   gap:8px; /* dikurangi */
@@ -125,7 +123,7 @@ html, body {
 }
 #menu-buttons button:hover {
   background: #444;
-                              }
+}
 
 /* progress bar */
 #progress-container {
@@ -170,81 +168,15 @@ html, body {
 }
 #sub-buttons button:hover {
   background:#444;
-}
-#invBtn {
-  padding:12px 20px;
-  font-size:16px;
-  border-radius:15px;
-  min-width:100px;
-  color:white;
-  background:#333;
-  border:none;
-  box-shadow: inset 0 -3px 4px #111, 0 3px 4px #000;
-  cursor:pointer;
-  transition:0.1s, background 0.2s;
-}
-#invBtn:hover { background:#444; }
-#invBtn.active-btn { background: gold !important; }
-
-#buildBtn {
-  padding:12px 20px;
-  font-size:16px;
-  border-radius:15px;
-  min-width:100px;
-  color:white;
-  background:#333;
-  border:none;
-  box-shadow: inset 0 -3px 4px #111, 0 3px 4px #000;
-  cursor:pointer;
-  transition:0.1s, background 0.2s;
-}
-#buildBtn:hover { background:#444; }
-#buildBtn.active-btn { background: gold !important; }
-
-  #leaderBtn {
-  padding:12px 20px;
-  font-size:16px;
-  border-radius:15px;
-  min-width:100px;
-  color:white;
-  background:#333;
-  border:none;
-  box-shadow: inset 0 -3px 4px #111, 0 3px 4px #000;
-  cursor:pointer;
-  transition:0.1s, background 0.2s;
-}
-#leaderBtn:hover { background:#444; }
-#leaderBtn.active-btn { background: gold !important; }
-
-  const sellBtn = document.getElementById("sellBtn");
-sellBtn.onclick = () => {
-  document.querySelectorAll("#menu-buttons button, #sub-buttons button").forEach(btn => btn.classList.remove("active-btn"));
-  sellBtn.classList.add("active-btn");
-  document.getElementById("result").innerText = "Hasil - Menjual item…";
-};
-
-  #shopBtn {
-  padding:12px 20px;
-  font-size:16px;
-  border-radius:15px;
-  min-width:100px;
-  color:white;
-  background:#333;
-  border:none;
-  box-shadow: inset 0 -3px 4px #111, 0 3px 4px #000;
-  cursor:pointer;
-  transition:0.1s, background 0.2s;
-}
-#shopBtn:hover { background:#444; }
-#shopBtn.active-btn { background: gold !important; }
+  }
 </style>
 </head>
 <body>
 
 <div id="status">
-  <div>🪨 Stone: <span id="stone">0</span></div>
-  <div>💰 $: <span id="money" class="money">0</span></div>
-  <div>⭐ Level: <span id="level">0</span></div>
+  <div> Stone: <span id="stone">0</span></div>
+  <div> $: <span id="money" class="money">0</span></div>
+  <div> Level: <span id="level">0</span></div>
 </div>
 
 <div id="progress-container">
@@ -256,11 +188,11 @@ sellBtn.onclick = () => {
 </div>
 
 <div id="menu-buttons">
-  <button id="invBtn">Inventory</button>
-  <button id="buildBtn">Build Up</button>
-  <button id="leaderBtn">Leaderboard</button>
+  <button onclick="window.location.href='inv.html'">Inventory</button>
+  <button onclick="window.location.href='buildup.html'">Build Up</button>
+  <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
 </div>
-
+  <!-- Tambahkan di bawah div #menu-buttons -->
 <div id="sub-buttons">
   <button id="sellBtn">🛒 Sell</button>
   <button id="shopBtn">⛏️ Shop</button>
@@ -269,18 +201,6 @@ sellBtn.onclick = () => {
 <audio id="hitSound" src="https://github.com/MNEFSID/Mining-Clicker/raw/refs/heads/main/Crack.mp3"></audio>
 
 <script type="module">
-const invBtn = document.getElementById("invBtn");
-invBtn.onclick = () => {
-  document.querySelectorAll("#menu-buttons button, #sub-buttons button").forEach(btn => btn.classList.remove("active-btn"));
-  invBtn.classList.add("active-btn");
-  document.getElementById("result").innerText = "Hasil - Membuka Inventory…";
-};
-  const buildBtn = document.getElementById("buildBtn");
-buildBtn.onclick = () => {
-  document.querySelectorAll("#menu-buttons button, #sub-buttons button").forEach(btn => btn.classList.remove("active-btn"));
-  buildBtn.classList.add("active-btn");
-  document.getElementById("result").innerText = "Hasil - Build Up…";
-};
   // Optional: kasih alert atau aksi klik
 document.getElementById("sellBtn").onclick = () => {
   alert("Sell tombol dipencet!");
@@ -288,27 +208,6 @@ document.getElementById("sellBtn").onclick = () => {
 document.getElementById("shopBtn").onclick = () => {
   alert("Shop tombol dipencet!");
 };
-  const leaderBtn = document.getElementById("leaderBtn");
-leaderBtn.onclick = () => {
-  document.querySelectorAll("#menu-buttons button, #sub-buttons button").forEach(btn => btn.classList.remove("active-btn"));
-  leaderBtn.classList.add("active-btn");
-  document.getElementById("result").innerText = "Hasil - Leaderboard…";
-};
-  const sellBtn = document.getElementById("sellBtn");
-sellBtn.onclick = () => {
-  document.querySelectorAll("#menu-buttons button, #sub-buttons button").forEach(btn => btn.classList.remove("active-btn"));
-  sellBtn.classList.add("active-btn");
-  document.getElementById("result").innerText = "Hasil - Menjual item…";
-};
-const shopBtn = document.getElementById("shopBtn");
-shopBtn.onclick = () => {
-  document.querySelectorAll("#menu-buttons button, #sub-buttons button").forEach(btn => btn.classList.remove("active-btn"));
-  shopBtn.classList.add("active-btn");
-  document.getElementById("result").innerText = "Hasil - Membuka Shop…";
-};
-  
-  
-  
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
 import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
