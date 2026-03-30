@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Mining Clicker</title>
+
 <style>
 html, body {
   margin:0;
@@ -14,11 +15,11 @@ html, body {
   font-family: Arial;
   text-align:center;
   color:white;
-  background: url('https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Main.png') no-repeat center center fixed;
+  background: url('https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/file_000000002abc71fa9ddf9b7b2bdd92cb.png') no-repeat center center fixed;
   background-size: cover;
 }
 
-/* STATUS BAR */
+/* STATUS */
 #status {
   margin:15px auto;
   padding:10px 20px;
@@ -30,75 +31,30 @@ html, body {
   font-size:18px;
   background: rgba(0,0,0,0.5);
   max-width:600px;
-  transition: 0.3s;
-}
-
-#status.level-up {
-  border-color: gold;
-  box-shadow: 0 0 10px gold;
 }
 
 #status span.money {
-  color:#0f0; /* ijo neon */
+  color:#0f0;
   font-weight:bold;
 }
 
 /* ROCK */
 #rock-container {
-  position: relative;
-  width: 100%;
   height: calc(100vh - 280px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 #rock {
   width:150px;
   height:150px;
   cursor:pointer;
-  background: url('https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Stone.png') no-repeat center center;
-  background-size: contain;
-  transition: transform 0.1s;
+  background:url('https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Tak%20berjudul89_20260329081133.png') no-repeat center;
+  background-size:contain;
 }
 
-@keyframes idleRock {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-  100% { transform: translateY(0); }
-}
-#rock.idle {
-  animation: idleRock 2s infinite;
-}
-
-#rock.shake {
-  animation: shake 0.2s;
-}
-
-@keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  20% { transform: translate(-1px, -2px) rotate(-1deg); }
-  40% { transform: translate(-3px, 0px) rotate(1deg); }
-  60% { transform: translate(3px, 2px) rotate(0deg); }
-  80% { transform: translate(1px, -1px) rotate(1deg); }
-  100% { transform: translate(-1px, 2px) rotate(-1deg); }
-}
-
-/* floating +1 Stone */
-.floating-text {
-  position:absolute;
-  color:#0f0; /* ijo neon */
-  font-weight:bold;
-  animation: floatFade 1s forwards;
-  pointer-events:none;
-}
-
-@keyframes floatFade {
-  0% { opacity:1; transform:translateY(0);}
-  100% { opacity:0; transform:translateY(-50px);}
-}
-
-/* tombol bawah 3D inset */
+/* BUTTON */
 #menu-buttons {
   display:flex;
   justify-content:center;
@@ -106,102 +62,79 @@ html, body {
   margin-top:15px;
 }
 #menu-buttons button {
-  padding:20px 30px;
-  font-size:20px;
-  font-weight:bold;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
-  min-width:140px;
+  padding:20px;
+  font-size:18px;
+  border-radius:15px;
+  background:#333;
   color:white;
-  background: #333;
-  box-shadow: inset 0 -4px 6px #111, 0 4px 6px #000;
-  transition: 0.1s;
-}
-#menu-buttons button:active {
-  box-shadow: inset 0 4px 6px #111, 0 2px 3px #000;
-  transform: translateY(2px);
-}
-#menu-buttons button:hover {
-  background: #444;
 }
 
-/* progress bar */
+/* PROGRESS */
 #progress-container {
   width:80%;
   height:25px;
   background: rgba(255,255,255,0.2);
   border-radius:12px;
   margin:10px auto;
-  overflow:hidden;
 }
 #progress-bar {
   width:0%;
   height:100%;
   background: gold;
-  border-radius:12px;
-  transition: width 0.2s;
 }
-  /* INVENTORY */
+
+/* INVENTORY */
 #inventory-panel {
-  position: absolute;
-  bottom: 120px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 500px;
-  background: rgba(0,0,0,0.7);
-  border: 3px solid white;
-  border-radius: 15px;
-  padding: 10px;
-  display: none;
+  position:absolute;
+  bottom:120px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:500px;
+  background:rgba(0,0,0,0.8);
+  border:3px solid white;
+  border-radius:15px;
+  padding:10px;
+  display:none;
 }
 
 #inv-grid {
-  display: grid;
+  display:grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  gap:10px;
 }
 
-/* SLOT */
 .inv-slot {
-  width: 100%;
-  padding-top: 100%;
-  position: relative;
-  background: rgba(255,255,255,0.1);
-  border: 2px solid white;
-  border-radius: 10px;
+  padding-top:100%;
+  position:relative;
+  background:rgba(255,255,255,0.1);
+  border:2px solid white;
+  border-radius:10px;
 }
 
-/* ITEM */
 .inv-item {
-  position: absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  position:absolute;
+  top:0; left:0; right:0; bottom:0;
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
 }
 
-/* STACK NUMBER */
 .inv-count {
-  position: absolute;
-  bottom: 3px;
-  right: 5px;
-  font-size: 12px;
-  font-weight: bold;
-  color: white;
-                             }
+  position:absolute;
+  bottom:3px;
+  right:5px;
+  font-size:12px;
+}
 </style>
 </head>
+
 <body>
 
 <div id="status">
-  <div>🪨 Stone: <span id="stone">0</span></div>
-  <div>💰 $: <span id="money" class="money">0</span></div>
-  <div>⭐ Level: <span id="level">0</span></div>
+  <div>Stone: <span id="stone">0</span></div>
+  <div>$: <span id="money">0</span></div>
+  <div>Level: <span id="level">0</span></div>
 </div>
 
 <div id="progress-container">
@@ -209,12 +142,12 @@ html, body {
 </div>
 
 <div id="rock-container">
-  <div id="rock" class="idle"></div>
+  <div id="rock"></div>
 </div>
 
-<!-- INVENTORY PANEL -->
+<!-- INVENTORY -->
 <div id="inventory-panel">
-  <h2>Inventory</h2>
+  <h3>Inventory</h3>
   <div id="inv-grid"></div>
 </div>
 
@@ -224,75 +157,50 @@ html, body {
   <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
 </div>
 
-<h3 id="result">Hasil -</h3>
-<audio id="hitSound" src="https://github.com/MNEFSID/Mining-Clicker/raw/refs/heads/main/Crack.mp3"></audio>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
 import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAetAXBUTmd33SQbmArFE9HnMaqCl1gdNc",
-  authDomain: "miningclickergame.firebaseapp.com",
-  databaseURL: "https://miningclickergame-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "miningclickergame",
-  storageBucket: "miningclickergame.firebasestorage.app",
-  messagingSenderId: "379862875129",
-  appId: "1:379862875129:web:7de4eb8d3b52befd78db28",
-  measurementId: "G-VQGX0S3ZCS"
-};
+const app = initializeApp({
+  apiKey: "AIzaSy...",
+  databaseURL: "https://miningclickergame-default-rtdb.asia-southeast1.firebasedatabase.app"
+});
 
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const db = getDatabase();
 
-const urlParams = new URLSearchParams(window.location.search);
-const uid = urlParams.get("uid");
-if (!uid) { alert("Login dulu!"); window.location.href="index.html"; }
+const uid = new URLSearchParams(window.location.search).get("uid");
+if(!uid){ alert("Login dulu!"); location.href="index.html"; }
 
-let stone = 0;
-let money = 0;
-let level = 0;
+let stone=0, money=0, level=0;
 
-  ////////// INVENTORY //////////
+////////// INVENTORY //////////
+let inventory = { stone:0 };
 
-let inventory = {
-  stone: 0
-};
-
-// toggle buka/tutup inventory
 function toggleInventory(){
-  const panel = document.getElementById("inventory-panel");
-  panel.style.display = panel.style.display === "none" ? "block" : "none";
+  const p = document.getElementById("inventory-panel");
+  p.style.display = p.style.display === "block" ? "none" : "block";
 }
 
-// render inventory
 function renderInventory(){
   const grid = document.getElementById("inv-grid");
-  grid.innerHTML = "";
+  grid.innerHTML="";
 
-  // contoh: cuma stone dulu
   const items = [
-    {
-      name: "stone",
-      count: inventory.stone,
-      img: "https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Tak%20berjudul89_20260329081133.png"
-    }
+    {count: inventory.stone, img:"https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Tak%20berjudul89_20260329081133.png"}
   ];
 
-  items.forEach(item => {
-    const slot = document.createElement("div");
-    slot.className = "inv-slot";
+  items.forEach(item=>{
+    const slot=document.createElement("div");
+    slot.className="inv-slot";
 
-    if(item.count > 0){
-      const icon = document.createElement("div");
-      icon.className = "inv-item";
-      icon.style.backgroundImage = `url(${item.img})`;
+    if(item.count>0){
+      const icon=document.createElement("div");
+      icon.className="inv-item";
+      icon.style.backgroundImage=`url(${item.img})`;
 
-      const count = document.createElement("div");
-      count.className = "inv-count";
-      count.innerText = item.count;
+      const count=document.createElement("div");
+      count.className="inv-count";
+      count.innerText=item.count;
 
       slot.appendChild(icon);
       slot.appendChild(count);
@@ -300,92 +208,43 @@ function renderInventory(){
 
     grid.appendChild(slot);
   });
-  }
-
-const stoneText = document.getElementById("stone");
-const moneyText = document.getElementById("money");
-const levelText = document.getElementById("level");
-const rock = document.getElementById("rock");
-const hitSound = document.getElementById("hitSound");
-const resultText = document.getElementById("result");
-const rockContainer = document.getElementById("rock-container");
-const statusBar = document.getElementById("status");
-const progressBar = document.getElementById("progress-bar");
-
-// target klik tiap level
-function getLevelTarget(level) {
-  return level*10;
 }
 
-function updateProgress() {
-  const target = getLevelTarget(level+1);
-  let progressPercent = (stone / target) * 100;
-  if(progressPercent > 100) progressPercent = 100;
-  progressBar.style.width = progressPercent + "%";
-}
+function updateUI(){
+  document.getElementById("stone").innerText=stone;
+  document.getElementById("money").innerText=money;
+  document.getElementById("level").innerText=level;
 
-function updateUI() {
-  stoneText.innerText = stone;
-  moneyText.innerText = money; // tetap tampil tapi tidak bertambah
-  levelText.innerText = level;
-
-  updateProgress();
-
-  if (stone >= getLevelTarget(level+1)) {
-    statusBar.classList.add("level-up");
-    setTimeout(() => statusBar.classList.remove("level-up"), 1000);
-  }
   renderInventory();
 }
 
-// ambil data user
-get(ref(db, 'users/' + uid)).then(snapshot => {
-  if (snapshot.exists()) {
-    const data = snapshot.val();
-    stone = data.stone || 0;
-    money = data.money || 0;
-    level = data.level || 0;
-    inventory = data.inventory || { stone: 0 };
+get(ref(db,'users/'+uid)).then(s=>{
+  if(s.exists()){
+    const d=s.val();
+    stone=d.stone||0;
+    money=d.money||0;
+    level=d.level||0;
+    inventory=d.inventory||{stone:0};
     updateUI();
   }
 });
 
-rock.onclick = () => {
-  stone += 1;
-inventory.stone += 1;
+document.getElementById("rock").onclick=()=>{
+  stone++;
+  inventory.stone++;
 
-  const target = getLevelTarget(level+1);
-  if(stone >= target){
-    stone = target;
-    level +=1;
-    stone = 0; // reset stone
+  if(stone>=10){
+    level++;
+    stone=0;
   }
 
-  rock.classList.add("shake");
-  setTimeout(() => rock.classList.remove("shake"), 200);
-
-  hitSound.currentTime = 0;
-  hitSound.play();
-
-  // floating +1 Stone
-  const float = document.createElement("div");
-  float.className = "floating-text";
-  float.innerText = "+1 Stone";
-  const rect = rock.getBoundingClientRect();
-  const containerRect = rockContainer.getBoundingClientRect();
-  float.style.left = (rect.left + rect.width/2 - containerRect.left + (Math.random()*30-15)) + "px";
-  float.style.top = (rect.top + rect.height/2 - containerRect.top + (Math.random()*30-15)) + "px";
-  rockContainer.appendChild(float);
-  setTimeout(() => float.remove(), 1000);
-
-  set(ref(db, 'users/' + uid + '/stone'), stone);
-  set(ref(db, 'users/' + uid + '/level'), level);
-  set(ref(db, 'users/' + uid + '/inventory'), inventory);
+  set(ref(db,'users/'+uid),{
+    stone, money, level, inventory
+  });
 
   updateUI();
 };
-
-updateUI();
 </script>
+
 </body>
 </html>
