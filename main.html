@@ -201,7 +201,7 @@ html, body {
 
 <div id="menu-buttons">
   <button onclick="toggleInventory()">Inventory</button>
-  <button onclick="togglebuildup()">buildup</button>
+  <button onclick="window.location.href='buildup.html'">Build Up</button>
   <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
 </div>
 
@@ -322,6 +322,7 @@ rock.onclick = () => {
 
 updateUI();
   function toggleInventory(){
+  console.log("kepencet"); // DEBUG
   const panel = document.getElementById("inventory-panel");
   panel.classList.toggle("show");
   renderInventory();
