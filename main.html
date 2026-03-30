@@ -35,7 +35,13 @@ html, body {
 
 #status.level-up {
   border-color: gold;
-  box-shadow: 0 0 10px gold;
+  box-shadow: 0 0 15px gold;
+  animation: glow 0.5s alternate 3;
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 10px gold; }
+  100% { box-shadow: 0 0 25px gold; }
 }
 
 #status span.money {
@@ -250,6 +256,7 @@ html, body {
   color: #FFD700;
 }
 
+/* PROGRESS BAR */
 #progress-container {
   width: 80%;
   height: 25px;
@@ -262,18 +269,25 @@ html, body {
 #progress-bar {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #FFD700, #FFC700);
+  background: linear-gradient(90deg, #FFD700 0%, #FFC700 50%, #FFD700 100%);
   border-radius: 12px;
   transition: width 0.2s;
+  background-size: 200% 100%;
+  animation: gradientMove 1.5s linear infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0 0; }
+  100% { background-position: -200% 0; }
 }
 </style>
 </head>
 <body>
 
 <div id="status">
-  <div>Stone: <span id="stone">0</span></div>
-  <div>$: <span id="money" class="money">0</span></div>
-  <div>Level: <span id="level">0</span></div>
+  <div>🪨 Stone: <span id="stone">0</span></div>
+  <div>💰 $: <span id="money" class="money">0</span></div>
+  <div>⭐ Level: <span id="level">0</span></div>
 </div>
 
 <div id="progress-container">
@@ -340,6 +354,7 @@ const levelText = document.getElementById("level");
 const rock = document.getElementById("rock");
 const hitSound = document.getElementById("hitSound");
 const rockContainer = document.getElementById("rock-container");
+const progressBar = document.getElementById("progress-bar");
 
 const inventoryPopup = document.getElementById("inventory-popup");
 const invGrid = document.getElementById("inv-grid");
@@ -418,15 +433,30 @@ rock.onclick = () => {
   hitSound.play();
 
   updateUI();
+
   // simpan firebase
   set(ref(db,'users/'+uid+'/stone'),stone);
   set(ref(db,'users/'+uid+'/inventory'),inventory);
 };
 
+const stonesPerLevel = 5; // jumlah stone untuk naik level
+
 function updateUI(){
-  stoneText.innerText=stone;
-  moneyText.innerText=money;
-  levelText.innerText=level;
+  stoneText.innerText = stone;
+  moneyText.innerText = money;
+  levelText.innerText = level;
+
+  // Update progress bar
+  let progress = (stone % stonesPerLevel) / stonesPerLevel * 100;
+  progressBar.style.width = progress + "%";
+
+  // Level up otomatis
+  if(stone >= (level + 1) * stonesPerLevel){
+    level += 1;
+    const status = document.getElementById("status");
+    status.classList.add("level-up");
+    setTimeout(()=>status.classList.remove("level-up"), 1000);
+  }
 }
 
 // AMBIL DATA DARI FIREBASE
