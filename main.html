@@ -318,71 +318,55 @@ const urlParams = new URLSearchParams(window.location.search);
 const uid = urlParams.get("uid");
 if (!uid) { alert("Login dulu!"); window.location.href="index.html"; }
 
+// GLOBAL VARIABLES
 let stone = 0;
 let money = 0;
 let level = 0;
+let inventory = []; // simpan semua item
 
 const stoneText = document.getElementById("stone");
 const moneyText = document.getElementById("money");
 const levelText = document.getElementById("level");
 const rock = document.getElementById("rock");
 const hitSound = document.getElementById("hitSound");
-const resultText = document.getElementById("result");
 const rockContainer = document.getElementById("rock-container");
 const statusBar = document.getElementById("status");
 const progressBar = document.getElementById("progress-bar");
 
-// target klik tiap level
-function getLevelTarget(level) {
-  return level*10;
-}
+const inventoryPopup = document.getElementById("inventory-popup");
+const invGrid = document.getElementById("inv-grid");
+const inventoryBtn = document.querySelector("#menu-buttons button:nth-child(1)");
+const closeInvBtn = document.getElementById("close-inv");
 
-function updateProgress() {
-  const target = getLevelTarget(level+1);
-  let progressPercent = (stone / target) * 100;
-  if(progressPercent > 100) progressPercent = 100;
-  progressBar.style.width = progressPercent + "%";
-}
+// === INVENTORY BUTTONS ===
+inventoryBtn.onclick = () => {
+  renderInventory();
+  inventoryPopup.style.display = "flex";
+};
+closeInvBtn.onclick = () => inventoryPopup.style.display = "none";
 
-function updateUI() {
-  stoneText.innerText = stone;
-  moneyText.innerText = money; // tetap tampil tapi tidak bertambah
-  levelText.innerText = level;
-
-  updateProgress();
-
-  if (stone >= getLevelTarget(level+1)) {
-    statusBar.classList.add("level-up");
-    setTimeout(() => statusBar.classList.remove("level-up"), 1000);
+// === RENDER INVENTORY ===
+function renderInventory() {
+  invGrid.innerHTML = "";
+  for (let i = 0; i < 20; i++) {
+    const slot = document.createElement("div");
+    slot.className = "inv-slot";
+    if(inventory[i]) slot.innerText = `${inventory[i].type} x${inventory[i].qty}`;
+    invGrid.appendChild(slot);
   }
 }
 
-// ambil data user
-get(ref(db, 'users/' + uid)).then(snapshot => {
-  if (snapshot.exists()) {
-    const data = snapshot.val();
-    stone = data.stone || 0;
-    money = data.money || 0;
-    level = data.level || 0;
-    updateUI();
-  }
-});
+// === TAMBAH STONE KE INVENTORY ===
+function addStoneToInventory() {
+  let stoneSlot = inventory.find(s => s.type === "stone");
+  if(stoneSlot) stoneSlot.qty += 1;
+  else inventory.push({type:'stone', qty:1});
+  renderInventory();
+}
 
+// === ROCK CLICK ===
 rock.onclick = () => {
-  stone += 1; // hanya Stone bertambah
-
-  const target = getLevelTarget(level+1);
-  if(stone >= target){
-    stone = target;
-    level +=1;
-    stone = 0; // reset stone
-  }
-
-  rock.classList.add("shake");
-  setTimeout(() => rock.classList.remove("shake"), 200);
-
-  hitSound.currentTime = 0;
-  hitSound.play();
+  stone += 1;
 
   // floating +1 Stone
   const float = document.createElement("div");
@@ -395,70 +379,13 @@ rock.onclick = () => {
   rockContainer.appendChild(float);
   setTimeout(() => float.remove(), 1000);
 
-  set(ref(db, 'users/' + uid + '/stone'), stone);
-  set(ref(db, 'users/' + uid + '/level'), level);
-
-  // INVENTORY LOGIC
-let inventory = []; // simpan semua item, misal: {type:'stone', qty:1}
-
-const inventoryPopup = document.getElementById("inventory-popup");
-const invGrid = document.getElementById("inv-grid");
-const inventoryBtn = document.querySelector("#menu-buttons button:nth-child(1)");
-const closeInvBtn = document.getElementById("close-inv");
-
-// buka/tutup inventory
-inventoryBtn.onclick = () => {
-  renderInventory();
-  inventoryPopup.style.display = "flex";
-};
-closeInvBtn.onclick = () => inventoryPopup.style.display = "none";
-
-// render inventory
-function renderInventory() {
-  invGrid.innerHTML = "";
-  for (let i = 0; i < 20; i++) {
-    const slot = document.createElement("div");
-    slot.className = "inv-slot";
-    if(inventory[i]) slot.innerText = `${inventory[i].type} x${inventory[i].qty}`;
-    invGrid.appendChild(slot);
-  }
-}
-
-// tambahin stone ke inventory
-function addStoneToInventory() {
-  // cek ada slot stone di inventory
-  let stoneSlot = inventory.find(s => s.type === "stone");
-  if(stoneSlot) {
-    stoneSlot.qty +=1;
-  } else {
-    inventory.push({type:'stone', qty:1});
-  }
-  renderInventory();
-}
-
-// modifikasi rock.onclick
-rock.onclick = () => {
-  stone += 1;
-
-  // floating text
-  const float = document.createElement("div");
-  float.className = "floating-text";
-  float.innerText = "+1 Stone";
-  const rect = rock.getBoundingClientRect();
-  const containerRect = rockContainer.getBoundingClientRect();
-  float.style.left = (rect.left + rect.width/2 - containerRect.left + (Math.random()*30-15)) + "px";
-  float.style.top = (rect.top + rect.height/2 - containerRect.top + (Math.random()*30-15)) + "px";
-  rockContainer.appendChild(float);
-  setTimeout(() => float.remove(), 1000);
-
-  // tambah ke inventory
   addStoneToInventory();
 
-  // level & reset stone utama
+  // level & reset main stone
   const target = getLevelTarget(level+1);
   if(stone >= target){
-    stone = 0; // reset UI main stone
-    level +=1;
+    stone = 0;
+    level += 1;
   }
 
   rock.classList.add("shake");
@@ -466,28 +393,29 @@ rock.onclick = () => {
   hitSound.currentTime = 0;
   hitSound.play();
 
-  // update UI
   updateUI();
 
-  // simpan inventory & stone & level ke Firebase
+  // simpan ke Firebase
   set(ref(db, 'users/' + uid + '/stone'), stone);
   set(ref(db, 'users/' + uid + '/level'), level);
   set(ref(db, 'users/' + uid + '/inventory'), inventory);
 };
 
-// ambil inventory dari firebase saat load
+// === AMBIL DATA DARI FIREBASE SAAT LOAD ===
 get(ref(db, 'users/' + uid)).then(snapshot => {
   if(snapshot.exists()){
     const data = snapshot.val();
+    stone = data.stone || 0;
+    money = data.money || 0;
+    level = data.level || 0;
     inventory = data.inventory || [];
     renderInventory();
+    updateUI();
   }
 });
 
-  updateUI();
-};
-
 updateUI();
+  
 </script>
 </body>
 </html>
