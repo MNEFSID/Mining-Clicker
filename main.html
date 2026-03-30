@@ -136,17 +136,41 @@ html, body {
   padding:10px;
   border-radius:10px;
 }
+/* INVENTORY SLOT */
 .inv-slot {
-  background: rgba(255,255,255,0.1);
-  border:2px solid #FFD700;
-  border-radius:8px;
-  width:100%;
-  height:60px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border: 2px solid #FFD700;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 auto;
 }
-.inv-slot img { width:40px; height:40px; object-fit:contain; }
+
+.inv-slot img {
+  max-width: 40px;
+  max-height: 40px;
+}
+
+.inv-slot .stack {
+  position: absolute;
+  bottom: 2px;
+  right: 4px;
+  font-size: 12px;
+  color: #0f0;
+  font-weight: bold;
+  text-shadow: 0 0 3px black;
+}
+
+.inv-slot .item-name {
+  font-size: 12px;
+  margin-top: 2px;
+  color: #FFD700;
+  }
 </style>
 </head>
 <body>
@@ -174,6 +198,7 @@ html, body {
   <button id="shopBtn">Shop</button>
 </div>
 
+<!-- INVENTORY POPUP -->
 <div id="inventory-popup" style="display:none;">
   <div id="inventory-header">
     <h2>Inventory</h2>
@@ -245,26 +270,44 @@ function updateUI(){
 
 function getLevelTarget(lvl){ return 10 + lvl*5; }
 
-function renderInventory(){
-  invGrid.innerHTML="";
-  for(let i=0;i<20;i++){
+// === RENDER INVENTORY DENGAN GAMBAR + STACK + NAMA ===
+function renderInventory() {
+  invGrid.innerHTML = "";
+  for (let i = 0; i < 20; i++) {
     const slot = document.createElement("div");
-    slot.className="inv-slot";
-    if(inventory[i]){
+    slot.className = "inv-slot";
+
+    if (inventory[i]) {
+      const item = inventory[i];
       const img = document.createElement("img");
-      img.src = "https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Stone.png";
+      // Pilih gambar sesuai type
+      if(item.type === "stone") img.src = "https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Stone.png";
       slot.appendChild(img);
+
+      // stack number
+      const stack = document.createElement("div");
+      stack.className = "stack";
+      stack.innerText = item.qty;
+      slot.appendChild(stack);
+
+      // item name
+      const name = document.createElement("div");
+      name.className = "item-name";
+      name.innerText = item.type.charAt(0).toUpperCase() + item.type.slice(1);
+      slot.appendChild(name);
     }
+
     invGrid.appendChild(slot);
   }
 }
 
-function addStoneToInventory(){
-  const stoneSlot = inventory.find(s=>s.type==="stone");
-  if(stoneSlot) stoneSlot.qty+=1;
-  else inventory.push({type:"stone", qty:1});
+// === TAMBAH STONE KE INVENTORY ===
+function addStoneToInventory() {
+  let stoneSlot = inventory.find(s => s.type === "stone");
+  if(stoneSlot) stoneSlot.qty += 1;
+  else inventory.push({type:'stone', qty:1});
   renderInventory();
-}
+  }
 
 // ROCK CLICK
 rock.onclick = () => {
