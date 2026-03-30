@@ -20,14 +20,14 @@ html, body {
 
 /* STATUS BAR */
 #status {
-  margin:10px auto; /* dikurangi */
-  padding:8px 15px; /* dikurangi */
-  border:2px solid white; /* dikurangi */
-  border-radius:12px;
+  margin:15px auto;
+  padding:10px 20px;
+  border:3px solid white;
+  border-radius:15px;
   display:flex;
   justify-content:center;
-  gap:15px; /* dikurangi */
-  font-size:14px; /* dikurangi */
+  gap:30px;
+  font-size:18px;
   background: rgba(0,0,0,0.5);
   max-width:600px;
   transition: 0.3s;
@@ -102,24 +102,24 @@ html, body {
 #menu-buttons {
   display:flex;
   justify-content:center;
-  gap:8px; /* dikurangi */
-  margin-top:8px; /* dikurangi */
+  gap:15px;
+  margin-top:15px;
 }
 #menu-buttons button {
-  padding:12px 20px; /* dikurangi */
-  font-size:16px; /* dikurangi */
+  padding:20px 30px;
+  font-size:20px;
   font-weight:bold;
   border:none;
-  border-radius:15px;
+  border-radius:20px;
   cursor:pointer;
-  min-width:100px; /* dikurangi */
+  min-width:140px;
   color:white;
   background: #333;
-  box-shadow: inset 0 -3px 4px #111, 0 3px 4px #000;
+  box-shadow: inset 0 -4px 6px #111, 0 4px 6px #000;
   transition: 0.1s;
 }
 #menu-buttons button:active {
-  box-shadow: inset 0 3px 4px #111, 0 2px 2px #000;
+  box-shadow: inset 0 4px 6px #111, 0 2px 3px #000;
   transform: translateY(2px);
 }
 #menu-buttons button:hover {
@@ -142,42 +142,14 @@ html, body {
   border-radius:12px;
   transition: width 0.2s;
 }
-/* SUB BUTTONS */
-#sub-buttons {
-  display:flex;
-  justify-content:center;
-  gap:8px; /* rapat */
-  margin-top:8px;
-}
-#sub-buttons button {
-  padding:12px 20px;
-  font-size:16px;
-  font-weight:bold;
-  border:none;
-  border-radius:15px;
-  cursor:pointer;
-  min-width:100px;
-  color:white;
-  background:#333;
-  box-shadow: inset 0 -3px 4px #111, 0 3px 4px #000;
-  transition: 0.1s, background 0.2s;
-}
-#sub-buttons button:active {
-  box-shadow: inset 0 3px 4px #111, 0 2px 2px #000;
-  transform: translateY(2px);
-  background: gold; /* warna kuning pas dipencet */
-}
-#sub-buttons button:hover {
-  background:#444;
-}
 </style>
 </head>
 <body>
 
 <div id="status">
-  <div>ЁЯки Stone: <span id="stone">0</span></div>
-  <div>ЁЯТ░ $: <span id="money" class="money">0</span></div>
-  <div>тнР Level: <span id="level">0</span></div>
+  <div>🪨 Stone: <span id="stone">0</span></div>
+  <div>💰 $: <span id="money" class="money">0</span></div>
+  <div>⭐ Level: <span id="level">0</span></div>
 </div>
 
 <div id="progress-container">
@@ -193,22 +165,10 @@ html, body {
   <button onclick="window.location.href='buildup.html'">Build Up</button>
   <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
 </div>
-<!-- Tambahkan di bawah div #menu-buttons -->
-<div id="sub-buttons">
-  <button id="sellBtn">🛒 Sell</button>
-  <button id="shopBtn">⛏️ Shop</button>
-</div>
 
 <audio id="hitSound" src="https://github.com/MNEFSID/Mining-Clicker/raw/refs/heads/main/Crack.mp3"></audio>
 
 <script type="module">
-// Optional: kasih alert atau aksi klik
-document.getElementById("sellBtn").onclick = () => {
-  alert("Sell tombol dipencet!");
-};
-document.getElementById("shopBtn").onclick = () => {
-  alert("Shop tombol dipencet!");
-};
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
 import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
