@@ -18,16 +18,15 @@ html, body {
   background-size: cover;
 }
 
-/* STATUS BAR */
 #status {
-  margin:15px auto;
-  padding:10px 20px;
-  border:3px solid white;
-  border-radius:15px;
+  margin:10px auto; /* dikurangi */
+  padding:8px 15px; /* dikurangi */
+  border:2px solid white; /* dikurangi */
+  border-radius:12px;
   display:flex;
   justify-content:center;
-  gap:30px;
-  font-size:18px;
+  gap:15px; /* dikurangi */
+  font-size:14px; /* dikurangi */
   background: rgba(0,0,0,0.5);
   max-width:600px;
   transition: 0.3s;
@@ -98,33 +97,35 @@ html, body {
   100% { opacity:0; transform:translateY(-50px);}
 }
 
+/* STATUS BAR *
+
 /* tombol bawah 3D inset */
-#menu-buttons {
+#menu-button {
   display:flex;
   justify-content:center;
-  gap:15px;
-  margin-top:15px;
+  gap:8px; /* dikurangi */
+  margin-top:8px; /* dikurangi */
 }
 #menu-buttons button {
-  padding:20px 30px;
-  font-size:20px;
+  padding:12px 20px; /* dikurangi */
+  font-size:16px; /* dikurangi */
   font-weight:bold;
   border:none;
-  border-radius:20px;
+  border-radius:15px;
   cursor:pointer;
-  min-width:140px;
+  min-width:100px; /* dikurangi */
   color:white;
   background: #333;
-  box-shadow: inset 0 -4px 6px #111, 0 4px 6px #000;
+  box-shadow: inset 0 -3px 4px #111, 0 3px 4px #000;
   transition: 0.1s;
 }
 #menu-buttons button:active {
-  box-shadow: inset 0 4px 6px #111, 0 2px 3px #000;
+  box-shadow: inset 0 3px 4px #111, 0 2px 2px #000;
   transform: translateY(2px);
 }
 #menu-buttons button:hover {
   background: #444;
-}
+                              }
 
 /* progress bar */
 #progress-container {
