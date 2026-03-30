@@ -184,25 +184,24 @@ html, body {
 /* tombol bawah 3D inset */
   
 #menu-buttons {
-  position: fixed;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
+  justify-content: center;
   gap: 15px;
-  z-index: 1000;
+  margin: 10px auto 20px auto; /* atas 10px, bawah 20px */
+  z-index: 100;
 }
 
 #menu-buttons button {
-  padding: 12px 20px;
-  font-size: 16px;
+  padding: 15px 25px;
+  font-size: 18px;
   font-weight: bold;
   border: none;
-  border-radius: 15px;
+  border-radius: 20px;
   cursor: pointer;
+  min-width: 130px;
   color: white;
   background: #333;
-  box-shadow: inset 0 -3px 5px #111, 0 3px 5px #000;
+  box-shadow: inset 0 -4px 6px #111, 0 4px 6px #000;
   transition: 0.1s;
 }
 
@@ -211,9 +210,9 @@ html, body {
 }
 
 #menu-buttons button:active {
-  box-shadow: inset 0 3px 5px #111, 0 2px 3px #000;
+  box-shadow: inset 0 4px 6px #111, 0 2px 3px #000;
   transform: translateY(2px);
-  }
+}
 
 @media (max-width: 350px) {
   #menu-buttons button {
