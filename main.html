@@ -195,46 +195,48 @@ html, body {
   
 }
   
+#menu-buttons {
+  display:flex;
+  justify-content:center;
+  gap: clamp(5px, 2vw, 15px);
+  padding-bottom: clamp(10px, 2vh, 25px);
+}
+
 #menu-buttons button {
-  
-  padding:12px 18px;
-  
-  font-size:14px;
-  
-  font-weight:bold;
-  
+  padding: clamp(8px, 2vw, 20px) clamp(12px, 5vw, 30px);
+  font-size: clamp(12px, 3vw, 20px);
+  min-width: clamp(70px, 20vw, 140px);
+  border-radius: clamp(8px, 2vw, 20px);
   border:none;
-  
-  border-radius:15px;
-  
   cursor:pointer;
-  
-  min-width:100px;
-  
   color:white;
-  
-  background: #333;
-  
-  box-shadow: inset 0 -4px 6px #111, 0 4px 6px #000;
-  
-  transition: 0.1s;
+  background:#333;
+  box-shadow: inset 0 -3px 5px #111, 0 3px 5px #000;
+  transition:0.1s;
+}
+
+#menu-buttons button:hover { background:#444; }
+#menu-buttons button:active { 
+  box-shadow: inset 0 3px 5px #111, 0 2px 3px #000;
+  transform: translateY(1px);
   
 }
-  
-#menu-buttons button:active {
-  
-  box-shadow: inset 0 4px 6px #111, 0 2px 3px #000;
-  
-  transform: translateY(2px);
-  
+
+@media (max-width: 350px) {
+  #menu-buttons button {
+    font-size:12px;
+    padding:6px 10px;
+    min-width:70px;
+  }
 }
-  
-#menu-buttons button:hover {
-  
-  background: #444;
-  
+
+@media (min-width: 800px) {
+  #menu-buttons button {
+    font-size:18px;
+    padding:16px 25px;
+    min-width:120px;
+  }
 }
-  
 
   
 /* progress bar */
