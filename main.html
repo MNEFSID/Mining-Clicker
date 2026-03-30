@@ -57,13 +57,16 @@ html, body {
 }
 
 #rock {
-  width:150px;
-  height:150px;
-  cursor:pointer;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
   background: url('https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Stone.png') no-repeat center center;
-  background-size: contain;
+  background-size: 80%;
+  background-color: #fff;
+  border-radius: 15px;
   transition: transform 0.1s;
-}
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+  }
 
 @keyframes idleRock {
   0% { transform: translateY(0); }
@@ -188,7 +191,7 @@ html, body {
 
   /* gabungan style */
   background: #eaeaea; /* dari yang kedua */
-  padding: 10px;
+  padding: 20px;
 
   border-radius: 20px;
   display: flex;
