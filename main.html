@@ -145,6 +145,36 @@ html, body {
   border-radius:12px;
   transition: width 0.2s;
 }
+  #inventory-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: rgba(0,0,0,0.9);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  display: none;
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+#inventory-panel h2 {
+  margin-top: 0;
+}
+
+#inv-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.inv-item {
+  background: #222;
+  padding: 15px;
+  border-radius: 10px;
+  }
 </style>
 </head>
 <body>
@@ -164,10 +194,15 @@ html, body {
 </div>
 
 <div id="menu-buttons">
-  <button onclick="window.location.href='inv.html'">Inventory</button>
+  <button onclick="toggleInventory()">Inventory</button>
   <button onclick="window.location.href='buildup.html'">Build Up</button>
   <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
 </div>
+
+  <div id="inventory-panel">
+  <h2>Inventory</h2>
+  <div id="inv-grid"></div>
+  </div>
 
 <h3 id="result">Hasil -</h3>
 <audio id="hitSound" src="https://github.com/MNEFSID/Mining-Clicker/raw/refs/heads/main/Crack.mp3"></audio>
@@ -280,6 +315,32 @@ rock.onclick = () => {
 };
 
 updateUI();
+  function toggleInventory(){
+  const panel = document.getElementById("inventory-panel");
+  if(panel.style.display === "block"){
+    panel.style.display = "none";
+  } else {
+    panel.style.display = "block";
+    renderInventory();
+  }
+}
+
+function renderInventory(){
+  const grid = document.getElementById("inv-grid");
+  grid.innerHTML = "";
+
+  // contoh isi inventory (sementara)
+  const items = [
+    { name: "Stone", qty: stone }
+  ];
+
+  items.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "inv-item";
+    div.innerText = item.name + " : " + item.qty;
+    grid.appendChild(div);
+  });
+  }
 </script>
 </body>
 </html>
