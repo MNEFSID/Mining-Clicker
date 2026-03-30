@@ -213,7 +213,7 @@ html, body {
 <h3 id="result">Hasil -</h3>
 <audio id="hitSound" src="https://github.com/MNEFSID/Mining-Clicker/raw/refs/heads/main/Crack.mp3"></audio>
 
-<script>
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
 import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
@@ -321,8 +321,7 @@ rock.onclick = () => {
 };
 
 updateUI();
-  function toggleInventory(){
-  console.log("kepencet"); // DEBUG
+  window.toggleInventory = function(){
   const panel = document.getElementById("inventory-panel");
   panel.classList.toggle("show");
   renderInventory();
