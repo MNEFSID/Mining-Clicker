@@ -2,617 +2,281 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Mining Clicker</title><style>
-  
-html, body {  
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Mining Clicker</title>
+<style>
+html, body {
   margin:0;
-  padding:0;  
-  width:100%;  
-  height:100dvh;  
+  padding:0;
+  width:100%;
+  height:100%;
   overflow:hidden;
-  touch-action:manipulation
-  font-family: Arial;  
-  text-align:center;  
+  font-family: Arial;
+  text-align:center;
   color:white;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   background: url('https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Main.png') no-repeat center center fixed;
   background-size: cover;
 }
-  
+
 /* STATUS BAR */
-  
 #status {
-  
   margin:15px auto;
-  
-  padding:8px 12px;
-  
+  padding:10px 20px;
   border:3px solid white;
-  
   border-radius:15px;
-  
   display:flex;
-  
   justify-content:center;
-  
-  gap:15px;
-  
-  font-size:14px;
-  
+  gap:30px;
+  font-size:18px;
   background: rgba(0,0,0,0.5);
-  
   max-width:600px;
-  
   transition: 0.3s;
-  
 }
-  
 
-  
 #status.level-up {
-  
   border-color: gold;
-  
   box-shadow: 0 0 10px gold;
-  
 }
-  
 
-  
 #status span.money {
-  
   color:#0f0; /* ijo neon */
-  
   font-weight:bold;
-  
 }
-  
 
-  
 /* ROCK */
-  
 #rock-container {
-  
-  flex: 1;
-  
-  width: 100%;
-  
-  display: flex;
-  
-  align-items: center;
-  
-  justify-content: center;
-  
   position: relative;
-  
-}
-  
-
-  
-#rock {
-  
-  width:150px;
-  
-  height:150px;
-  
-  cursor:pointer;
-  
-  background: url('https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Stone.png') no-repeat center center;
-  
-  background-size: contain;
-  
-  transition: transform 0.1s;
-  
-}
-  
-
-  
-@keyframes idleRock {
-  
-  0% { transform: translateY(0); }
-  
-  50% { transform: translateY(-5px); }
-  
-  100% { transform: translateY(0); }
-  
-}
-  
-#rock.idle {
-  
-  animation: idleRock 2s infinite;
-  
-}
-  
-
-  
-#rock.shake {
-  
-  animation: shake 0.2s;
-  
-}
-  
-
-  
-@keyframes shake {
-  
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  
-  20% { transform: translate(-1px, -2px) rotate(-1deg); }
-  
-  40% { transform: translate(-3px, 0px) rotate(1deg); }
-  
-  60% { transform: translate(3px, 2px) rotate(0deg); }
-  
-  80% { transform: translate(1px, -1px) rotate(1deg); }
-  
-  100% { transform: translate(-1px, 2px) rotate(-1deg); }
-  
-}
-  
-
-  
-/* floating +1 Stone */
-  
-.floating-text {
-  
-  position:absolute;
-  
-  color:#0f0; /* ijo neon */
-  
-  font-weight:bold;
-  
-  animation: floatFade 1s forwards;
-  
-  pointer-events:none;
-  
-}
-  
-
-  
-@keyframes floatFade {
-  
-  0% { opacity:1; transform:translateY(0);}
-  
-  100% { opacity:0; transform:translateY(-50px);}
-  
-}
-  
-
-  
-/* tombol bawah 3D inset */
-  
-#menu-buttons {
+  width: 100%;
+  height: calc(100vh - 280px);
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 15px;
-  margin: 10px auto 20px auto; /* atas 10px, bawah 20px */
-  z-index: 100;
 }
 
+#rock {
+  width:150px;
+  height:150px;
+  cursor:pointer;
+  background: url('https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Stone.png') no-repeat center center;
+  background-size: contain;
+  transition: transform 0.1s;
+}
+
+@keyframes idleRock {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+#rock.idle {
+  animation: idleRock 2s infinite;
+}
+
+#rock.shake {
+  animation: shake 0.2s;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  20% { transform: translate(-1px, -2px) rotate(-1deg); }
+  40% { transform: translate(-3px, 0px) rotate(1deg); }
+  60% { transform: translate(3px, 2px) rotate(0deg); }
+  80% { transform: translate(1px, -1px) rotate(1deg); }
+  100% { transform: translate(-1px, 2px) rotate(-1deg); }
+}
+
+/* floating +1 Stone */
+.floating-text {
+  position:absolute;
+  color:#0f0; /* ijo neon */
+  font-weight:bold;
+  animation: floatFade 1s forwards;
+  pointer-events:none;
+}
+
+@keyframes floatFade {
+  0% { opacity:1; transform:translateY(0);}
+  100% { opacity:0; transform:translateY(-50px);}
+}
+
+/* tombol bawah 3D inset */
+#menu-buttons {
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-top:15px;
+}
 #menu-buttons button {
-  padding: 15px 25px;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  min-width: 130px;
-  color: white;
+  padding:20px 30px;
+  font-size:20px;
+  font-weight:bold;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+  min-width:140px;
+  color:white;
   background: #333;
   box-shadow: inset 0 -4px 6px #111, 0 4px 6px #000;
   transition: 0.1s;
 }
-
-#menu-buttons button:hover {
-  background: #444;
-}
-
 #menu-buttons button:active {
   box-shadow: inset 0 4px 6px #111, 0 2px 3px #000;
   transform: translateY(2px);
 }
-
-@media (max-width: 350px) {
-  #menu-buttons button {
-    font-size:12px;
-    padding:6px 10px;
-    min-width:70px;
-  }
+#menu-buttons button:hover {
+  background: #444;
 }
 
-@media (min-width: 800px) {
-  #menu-buttons button {
-    font-size:18px;
-    padding:16px 25px;
-    min-width:120px;
-  }
-}
-
-  
 /* progress bar */
-  
 #progress-container {
-  
   width:80%;
-  
   height:25px;
-  
   background: rgba(255,255,255,0.2);
-  
   border-radius:12px;
-  
   margin:10px auto;
-  
   overflow:hidden;
-  
 }
-  
 #progress-bar {
-  
   width:0%;
-  
   height:100%;
-  
   background: gold;
-  
   border-radius:12px;
-  
   transition: width 0.2s;
-  
 }
-  
- #inventory-panel {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 55%;
-  background: rgba(0,0,0,0.95);
-  border-top-left-radius: 25px;
-  border-top-right-radius: 25px;
-  padding: 15px;
-  z-index: 999;
-
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
-}
-
-#inventory-panel.show {
-  transform: translateY(0);
-}
-
-/* HEADER + tombol X */
-#inventory-header {
-  display:flex;
-  justify-content: space-between;
-  align-items:center;
-  margin-bottom:10px;
-}
-
-#close-inv {
-  background:red;
-  border:none;
-  color:white;
-  font-weight:bold;
-  padding:8px 12px;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-/* GRID INVENTORY */
-#inv-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-
-/* ITEM */
-.inv-item {
-  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-  border-radius: 12px;
-  padding: 10px;
-  text-align: center;
-  box-shadow: inset 0 2px 5px #000, 0 2px 5px #000;
-  position: relative;
-}
-
-/* gambar item */
-.inv-item img {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-}
-
-/* jumlah item */
-.inv-qty {
-  position: absolute;
-  bottom: 5px;
-  right: 8px;
-  background: rgba(0,0,0,0.7);
-  padding: 2px 6px;
-  border-radius: 6px;
-  font-size: 12px;
- }
-  #menu-buttons {
-  padding-bottom: 20px;
-  }
-  #menu-buttons {
-  padding-bottom: 25px;
-    }
-  }
-  
 </style>
 </head>
-  <body>
-<div id="status">  
-  <div>🪨 Stone: <span id="stone">0</span>
-  </div>  <div>💰 $: <span id="money" class="money">0</span></div>  
-  <div>⭐ Level: <span id="level">0</span></div></div><div id="progress-container">  <div id="progress-bar"></div></div><div id="rock-container">  <div id="rock" class="idle"></div></div><div id="menu-buttons"><button onclick="toggleInventory()">Inventory</button>
+<body>
 
-<button onclick="window.location.href='buildup.html'">Build Up</button>
-
-<button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
-
-<div id="inventory-panel">
-  <div id="inventory-header">
-    <h2>Inventory</h2>
-    <button id="close-inv" onclick="toggleInventory()">X</button>
-  </div>
-  <div id="inv-grid"></div>
+<div id="status">
+  <div> Stone: <span id="stone">0</span></div>
+  <div> $: <span id="money" class="money">0</span></div>
+  <div> Level: <span id="level">0</span></div>
 </div>
-  
-  <h3 id="result">Hasil -</h3><audio id="hitSound" src="https://github.com/MNEFSID/Mining-Clicker/raw/refs/heads/main/Crack.mp3"></audio>
+
+<div id="progress-container">
+  <div id="progress-bar"></div>
+</div>
+
+<div id="rock-container">
+  <div id="rock" class="idle"></div>
+</div>
+
+<div id="menu-buttons">
+  <button onclick="window.location.href='inv.html'">Inventory</button>
+  <button onclick="window.location.href='buildup.html'">Build Up</button>
+  <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
+</div>
+
+<h3 id="result">Hasil -</h3>
+<audio id="hitSound" src="https://github.com/MNEFSID/Mining-Clicker/raw/refs/heads/main/Crack.mp3"></audio>
 
 <script type="module">
-  
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-  
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
-  
 import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
-  
 
-  
 const firebaseConfig = {
-  
   apiKey: "AIzaSyAetAXBUTmd33SQbmArFE9HnMaqCl1gdNc",
-  
   authDomain: "miningclickergame.firebaseapp.com",
-  
   databaseURL: "https://miningclickergame-default-rtdb.asia-southeast1.firebasedatabase.app",
-  
   projectId: "miningclickergame",
-  
   storageBucket: "miningclickergame.firebasestorage.app",
-  
   messagingSenderId: "379862875129",
-  
   appId: "1:379862875129:web:7de4eb8d3b52befd78db28",
-  
   measurementId: "G-VQGX0S3ZCS"
-  
 };
-  
 
-  
 const app = initializeApp(firebaseConfig);
-  
 const analytics = getAnalytics(app);
-  
 const db = getDatabase();
-  
 
-  
 const urlParams = new URLSearchParams(window.location.search);
-  
 const uid = urlParams.get("uid");
-  
 if (!uid) { alert("Login dulu!"); window.location.href="index.html"; }
-  
 
-  
-let stone = 0;        // progress level
-let totalStone = 0;   // total inventory
+let stone = 0;
 let money = 0;
 let level = 0;
-  
 
-  
 const stoneText = document.getElementById("stone");
-  
 const moneyText = document.getElementById("money");
-  
 const levelText = document.getElementById("level");
-  
 const rock = document.getElementById("rock");
-  
 const hitSound = document.getElementById("hitSound");
-  
 const resultText = document.getElementById("result");
-  
 const rockContainer = document.getElementById("rock-container");
-  
 const statusBar = document.getElementById("status");
-  
 const progressBar = document.getElementById("progress-bar");
-  
 
-  
 // target klik tiap level
-  
 function getLevelTarget(level) {
-  
   return level*10;
-  
 }
-  
 
-  
 function updateProgress() {
-  
   const target = getLevelTarget(level+1);
-  
   let progressPercent = (stone / target) * 100;
-  
   if(progressPercent > 100) progressPercent = 100;
-  
   progressBar.style.width = progressPercent + "%";
-  
 }
-  
 
-  
 function updateUI() {
-  
   stoneText.innerText = stone;
-  
   moneyText.innerText = money; // tetap tampil tapi tidak bertambah
-  
   levelText.innerText = level;
-  
 
-  
   updateProgress();
-  
 
-  
   if (stone >= getLevelTarget(level+1)) {
-  
     statusBar.classList.add("level-up");
-  
     setTimeout(() => statusBar.classList.remove("level-up"), 1000);
-  
   }
-  
 }
-  
 
-  
 // ambil data user
-  
 get(ref(db, 'users/' + uid)).then(snapshot => {
   if (snapshot.exists()) {
     const data = snapshot.val();
-
     stone = data.stone || 0;
-
-    // 🔥 FIX: kalau totalStone belum ada, ambil dari stone
-    totalStone = (data.totalStone !== undefined) ? data.totalStone : stone;
-
     money = data.money || 0;
     level = data.level || 0;
-
     updateUI();
   }
 });
-  
 
-  
 rock.onclick = () => {
-  
-  stone += 1;
-  totalStone += 1;
-  
+  stone += 1; // hanya Stone bertambah
 
-  
   const target = getLevelTarget(level+1);
-  
   if(stone >= target){
-  
     stone = target;
-  
     level +=1;
-  
     stone = 0; // reset stone
-  
   }
-  
 
-  
   rock.classList.add("shake");
-  
   setTimeout(() => rock.classList.remove("shake"), 200);
-  
 
-  
   hitSound.currentTime = 0;
-  
   hitSound.play();
-  
 
-  
   // floating +1 Stone
-  
   const float = document.createElement("div");
-  
   float.className = "floating-text";
-  
   float.innerText = "+1 Stone";
-  
   const rect = rock.getBoundingClientRect();
-  
   const containerRect = rockContainer.getBoundingClientRect();
-  
   float.style.left = (rect.left + rect.width/2 - containerRect.left + (Math.random()*30-15)) + "px";
-  
   float.style.top = (rect.top + rect.height/2 - containerRect.top + (Math.random()*30-15)) + "px";
-  
   rockContainer.appendChild(float);
-  
   setTimeout(() => float.remove(), 1000);
-  
 
-  
   set(ref(db, 'users/' + uid + '/stone'), stone);
   set(ref(db, 'users/' + uid + '/level'), level);
-  set(ref(db, 'users/' + uid + '/totalStone'), totalStone);
 
-  
   updateUI();
-  
 };
-  
 
-  
 updateUI();
-  
-  window.toggleInventory = function(){
-  const panel = document.getElementById("inventory-panel");
-  panel.classList.toggle("show");
-  renderInventory();
-  }
-  
-
-  
-function renderInventory(){
-  const grid = document.getElementById("inv-grid");
-  grid.innerHTML = "";
-
-  const items = [
-    {
-      name: "Stone",
-      qty: totalstone,
-      img: "https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Stone.png"
-    }
-  ];
-
-  items.forEach(item => {
-    if(item.qty <= 0) return;
-
-    const div = document.createElement("div");
-    div.className = "inv-item";
-
-    div.innerHTML = `
-      <img src="${item.img}">
-      <div class="inv-qty">${item.qty}</div>
-    `;
-
-    grid.appendChild(div);
-  });
-}
-  
 </script>
 </body>
 </html>
