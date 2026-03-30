@@ -142,12 +142,12 @@ html, body {
   height: 100%;
   background: repeating-linear-gradient(
     45deg,
-    #FFD700,      /* kuning utama */
-    #FFD700 10px,
-    #FFEC8B 10px, /* kuning lebih terang */
-    #FFEC8B 20px
+    #FFD700 0px,
+    #FFD700 5px,
+    #FFEC8B 5px,
+    #FFEC8B 10px
   );
-  background-size: 40px 40px; /* ukuran pola */
+  background-size: 20px 20px;
   animation: moveStripe 1s linear infinite;
   border-radius: 12px;
   transition: width 0.2s;
@@ -155,7 +155,7 @@ html, body {
 
 @keyframes moveStripe {
   0% { background-position: 0 0; }
-  100% { background-position: 40px 0; }
+  100% { background-position: 20px 0; }
 }
 
 /* SUB BUTTONS - 2 BARIS BAWAH */
