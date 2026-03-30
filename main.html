@@ -31,6 +31,7 @@ html, body {
   background: rgba(0,0,0,0.5);
   max-width:600px;
   transition: 0.3s;
+}
 
 #status.level-up {
   border-color: gold;
@@ -141,7 +142,7 @@ html, body {
   border-radius:12px;
   transition: width 0.2s;
 }
-  /* SUB BUTTONS */
+/* SUB BUTTONS */
 #sub-buttons {
   display:flex;
   justify-content:center;
@@ -168,15 +169,15 @@ html, body {
 }
 #sub-buttons button:hover {
   background:#444;
-  }
+}
 </style>
 </head>
 <body>
 
 <div id="status">
-  <div>🪨 Stone: <span id="stone">0</span></div>
-  <div>💰 $: <span id="money" class="money">0</span></div>
-  <div>⭐ Level: <span id="level">0</span></div>
+  <div>ЁЯки Stone: <span id="stone">0</span></div>
+  <div>ЁЯТ░ $: <span id="money" class="money">0</span></div>
+  <div>тнР Level: <span id="level">0</span></div>
 </div>
 
 <div id="progress-container">
@@ -192,7 +193,7 @@ html, body {
   <button onclick="window.location.href='buildup.html'">Build Up</button>
   <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
 </div>
-  <!-- Tambahkan di bawah div #menu-buttons -->
+<!-- Tambahkan di bawah div #menu-buttons -->
 <div id="sub-buttons">
   <button id="sellBtn">🛒 Sell</button>
   <button id="shopBtn">⛏️ Shop</button>
@@ -201,7 +202,7 @@ html, body {
 <audio id="hitSound" src="https://github.com/MNEFSID/Mining-Clicker/raw/refs/heads/main/Crack.mp3"></audio>
 
 <script type="module">
-  // Optional: kasih alert atau aksi klik
+// Optional: kasih alert atau aksi klik
 document.getElementById("sellBtn").onclick = () => {
   alert("Sell tombol dipencet!");
 };
