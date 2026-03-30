@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mining Clicker Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-image: url('https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/2b3827c8fa347a015cc6861b4a0bc9295696fe65/file_000000002ec4720bad9c3c9859dfd117.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  background: rgba(0,0,0,0.6);
+  padding: 30px 20px;
+  border-radius: 20px;
+  text-align: center;
+  width: 340px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+}
+
+h1 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 28px;
+  margin: 10px 0 5px;
+}
+
+h1 .mining { color: #00BFFF; } /* biru */
+h1 .clicker { color: #FFD700; text-shadow: 2px 2px #000, 0 0 10px #FFD700; }
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255,255,255,0.9);
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+input::placeholder { color: gray; font-weight: normal; }
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  border-radius: 15px;
+  border: none;
+  background: linear-gradient(145deg, #FFD700, #FFA500);
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 6px #b8860b, 0 10px 20px rgba(0,0,0,0.5);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px #b8860b, 0 12px 25px rgba(0,0,0,0.5);
+}
+
+button:active {
+  transform: translateY(4px);
+  box-shadow: 0 3px #b8860b, 0 5px 10px rgba(0,0,0,0.4);
+}
+
+#signup-text, #login-text {
+  color: white;
+  font-size: 12px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+#signup-text span, #login-text span {
+  color: #00BFFF; /* biru */
+  text-decoration: underline;
+}
+
+#warning {
+  color: yellow;
+  font-size: 12px;
+  margin: 5px 0 10px;
+}
+
+#message {
+  color: red;
+  margin-top: 10px;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<div class="login-container">
+  <h1><span class="mining">Mining</span> <span class="clicker">Clicker</span></h1>
+
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+
+  <button id="login">Login</button>
+  <button id="register" style="display:none;">Register</button>
+
+  <p id="signup-text">Belum punya akun? <span id="show-signup">Sign In</span></p>
+  <p id="login-text" style="display:none;">Sudah punya akun? <span id="show-login">Log in</span></p>
+  <p id="warning" style="display:none;">Peringatan: Jangan gunakan Password Asli</p>
+
+  <p id="message"></p>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyAetAXBUTmd33SQbmArFE9HnMaqCl1gdNc",
+  authDomain: "miningclickergame.firebaseapp.com",
+  databaseURL: "https://miningclickergame-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "miningclickergame",
+  storageBucket: "miningclickergame.firebasestorage.app",
+  messagingSenderId: "379862875129",
+  appId: "1:379862875129:web:7de4eb8d3b52befd78db28",
+  measurementId: "G-VQGX0S3ZCS"
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth();
+const db = getDatabase();
+
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const loginBtn = document.getElementById("login");
+const registerBtn = document.getElementById("register");
+const showSignup = document.getElementById("show-signup");
+const showLogin = document.getElementById("show-login");
+const signupText = document.getElementById("signup-text");
+const loginText = document.getElementById("login-text");
+const warning = document.getElementById("warning");
+const message = document.getElementById("message");
+
+// Toggle Sign Up
+showSignup.onclick = () => {
+  registerBtn.style.display = 'block';
+  loginBtn.style.display = 'none';
+  signupText.style.display = 'none';
+  loginText.style.display = 'block';
+  warning.style.display = 'block';
+};
+
+// Back to Login
+showLogin.onclick = () => {
+  registerBtn.style.display = 'none';
+  loginBtn.style.display = 'block';
+  signupText.style.display = 'block';
+  loginText.style.display = 'none';
+  warning.style.display = 'none';
+};
+
+// Login
+loginBtn.onclick = () => {
+  const email = emailInput.value;
+  const password = passwordInput.value;
+  message.style.color = "red";
+
+  if (!email || !password) { message.innerText = "Email & Password wajib!"; return; }
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then(userCredential => {
+      const user = userCredential.user;
+      window.location.href = "main.html?uid=" + user.uid;
+    })
+    .catch(error => { 
+      message.innerText = "Login gagal! Email/Password salah."; 
+    });
+};
+
+// Register
+registerBtn.onclick = () => {
+  const email = emailInput.value;
+  const password = passwordInput.value;
+  message.style.color = "red";
+
+  if (!email || !password) { message.innerText = "Email & Password wajib!"; return; }
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(userCredential => {
+      const user = userCredential.user;
+      set(ref(db, 'users/' + user.uid), {
+        email: email,
+        money: 0,
+        power: 1
+      });
+      message.style.color="green";
+      message.innerText = "Register sukses! Silahkan login.";
+      registerBtn.style.display = 'none';
+      loginBtn.style.display = 'block';
+      signupText.style.display = 'block';
+      loginText.style.display = 'none';
+      warning.style.display = 'none';
+    })
+    .catch(error => { message.innerText = "Register gagal! Email sudah terpakai atau password terlalu pendek."; });
+};
+</script>
+
+</body>
+</html>
