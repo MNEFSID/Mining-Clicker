@@ -246,7 +246,7 @@ html, body {
   right: 4px;
   font-size: 12px;
   color: white;
-  font-weight: bold;
+  font-weight:bold;
   text-shadow: 0 0 3px black;
 }
 
@@ -285,9 +285,9 @@ html, body {
 <body>
 
 <div id="status">
-  <div>🪨 Stone: <span id="stone">0</span></div>
-  <div>💰 $: <span id="money" class="money">0</span></div>
-  <div>⭐ Level: <span id="level">0</span></div>
+  <div>Stone: <span id="stone">0</span></div>
+  <div>$: <span id="money" class="money">0</span></div>
+  <div>Level: <span id="level">0</span></div>
 </div>
 
 <div id="progress-container">
@@ -347,6 +347,7 @@ let stone = 0;
 let money = 0;
 let level = 0;
 let inventory = [];
+let currentClicks = 0;
 
 const stoneText = document.getElementById("stone");
 const moneyText = document.getElementById("money");
@@ -413,6 +414,7 @@ function addStoneToInventory(){
 // ROCK CLICK
 rock.onclick = () => {
   stone += 1;
+  currentClicks += 1;
 
   // floating +1 Stone
   const float = document.createElement("div");
@@ -439,20 +441,20 @@ rock.onclick = () => {
   set(ref(db,'users/'+uid+'/inventory'),inventory);
 };
 
-const stonesPerLevel = 5; // jumlah stone untuk naik level
+const baseClicksPerLevel = 10; // level 1 = 10 klik
 
 function updateUI(){
   stoneText.innerText = stone;
   moneyText.innerText = money;
   levelText.innerText = level;
 
-  // Update progress bar
-  let progress = (stone % stonesPerLevel) / stonesPerLevel * 100;
+  const clicksPerLevel = baseClicksPerLevel * (level + 1);
+  let progress = Math.min(currentClicks / clicksPerLevel * 100, 100);
   progressBar.style.width = progress + "%";
 
-  // Level up otomatis
-  if(stone >= (level + 1) * stonesPerLevel){
+  if(currentClicks >= clicksPerLevel){
     level += 1;
+    currentClicks = 0;
     const status = document.getElementById("status");
     status.classList.add("level-up");
     setTimeout(()=>status.classList.remove("level-up"), 1000);
@@ -467,10 +469,11 @@ get(ref(db,'users/'+uid)).then(snapshot=>{
     money=data.money||0;
     level=data.level||0;
     inventory=data.inventory||[];
+    currentClicks = data.currentClicks || 0;
     renderInventory();
     updateUI();
   }
 });
 </script>
 </body>
-  </html>
+</html>
