@@ -4,37 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Mining Clicker</title><style>
   
-html, body {
-  
+html, body {  
   margin:0;
-  
-  padding:0;
-  
-  width:100%;
-  
-  height:100%;
-  
-  overflow:auto;
-  
-  font-family: Arial;
-  
-  text-align:center;
-  
+  padding:0;  
+  width:100%;  
+  height:100%;  
+  overflow:hidden;
+  touch-action:manipulation
+  font-family: Arial;  
+  text-align:center;  
   color:white;
-  
   display: flex;
-  
   flex-direction: column;
-  
   min-height: 100vh;
-  
   background: url('https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Main.png') no-repeat center center fixed;
-  
   background-size: cover;
-  
+  position: fixed;
+  inset: 0;
 }
-  
-
   
 /* STATUS BAR */
   
@@ -355,8 +342,10 @@ html, body {
   padding: 2px 6px;
   border-radius: 6px;
   font-size: 12px;
-    }
-  
+ }
+  #menu-buttons {
+  padding-bottom: 20px;
+  }
   }
   
 </style></head><body><div id="status">  <div>🪨 Stone: <span id="stone">0</span></div>  <div>💰 $: <span id="money" class="money">0</span></div>  <div>⭐ Level: <span id="level">0</span></div></div><div id="progress-container">  <div id="progress-bar"></div></div><div id="rock-container">  <div id="rock" class="idle"></div></div><div id="menu-buttons"><button onclick="toggleInventory()">Inventory</button>
@@ -423,10 +412,9 @@ if (!uid) { alert("Login dulu!"); window.location.href="index.html"; }
   
 
   
-let stone = 0;
-  
+let stone = 0;        // progress level
+let totalStone = 0;   // total inventory
 let money = 0;
-  
 let level = 0;
   
 
@@ -510,9 +498,8 @@ get(ref(db, 'users/' + uid)).then(snapshot => {
     const data = snapshot.val();
   
     stone = data.stone || 0;
-  
+    totalStone = data.totalStone || 0;
     money = data.money || 0;
-  
     level = data.level || 0;
   
     updateUI();
@@ -525,7 +512,8 @@ get(ref(db, 'users/' + uid)).then(snapshot => {
   
 rock.onclick = () => {
   
-  stone += 1; // hanya Stone bertambah
+  stone += 1;
+  totalStone += 1;
   
 
   
@@ -578,9 +566,8 @@ rock.onclick = () => {
 
   
   set(ref(db, 'users/' + uid + '/stone'), stone);
-  
   set(ref(db, 'users/' + uid + '/level'), level);
-  
+  set(ref(db, 'users/' + uid + '/totalStone'), totalStone);
 
   
   updateUI();
@@ -606,7 +593,7 @@ function renderInventory(){
   const items = [
     {
       name: "Stone",
-      qty: stone,
+      qty: totalstone,
       img: "https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Stone.png"
     }
   ];
