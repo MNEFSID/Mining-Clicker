@@ -32,16 +32,11 @@ html, body {
   max-width:600px;
   transition: 0.3s;
 }
-
 #status.level-up {
   border-color: gold;
   box-shadow: 0 0 10px gold;
 }
-
-#status span.money {
-  color:#0f0;
-  font-weight:bold;
-}
+#status span.money { color:#0f0; font-weight:bold; }
 
 /* ROCK */
 #rock-container {
@@ -52,7 +47,6 @@ html, body {
   align-items: center;
   justify-content: center;
 }
-
 #rock {
   width:150px;
   height:150px;
@@ -61,24 +55,16 @@ html, body {
   background-size: contain;
   transition: transform 0.1s;
 }
-
-@keyframes idleRock {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-  100% { transform: translateY(0); }
-}
+@keyframes idleRock { 0% { transform: translateY(0); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
 #rock.idle { animation: idleRock 2s infinite; }
-
-#rock.shake {
-  animation: shake 0.2s;
-}
+#rock.shake { animation: shake 0.2s; }
 @keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  20% { transform: translate(-1px, -2px) rotate(-1deg); }
-  40% { transform: translate(-3px, 0px) rotate(1deg); }
-  60% { transform: translate(3px, 2px) rotate(0deg); }
-  80% { transform: translate(1px, -1px) rotate(1deg); }
-  100% { transform: translate(-1px, 2px) rotate(-1deg); }
+  0% { transform: translate(1px,1px) rotate(0deg); }
+  20% { transform: translate(-1px,-2px) rotate(-1deg); }
+  40% { transform: translate(-3px,0px) rotate(1deg); }
+  60% { transform: translate(3px,2px) rotate(0deg); }
+  80% { transform: translate(1px,-1px) rotate(1deg); }
+  100% { transform: translate(-1px,2px) rotate(-1deg); }
 }
 
 /* floating +1 Stone */
@@ -89,98 +75,53 @@ html, body {
   animation: floatFade 1s forwards;
   pointer-events:none;
 }
-@keyframes floatFade {
-  0% { opacity:1; transform:translateY(0); }
-  100% { opacity:0; transform:translateY(-50px); }
-}
+@keyframes floatFade { 0% { opacity:1; transform:translateY(0);} 100% { opacity:0; transform:translateY(-50px);} }
 
 /* MENU BUTTONS */
-#menu-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
-}
-#menu-buttons button {
-  padding: 15px 25px;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  min-width: 130px;
-  color: black;
-  background: #FFD700;
-  transform: translateY(0);
-  transition: transform 0.1s, background 0.1s;
-  box-shadow: 0 4px #B8860B;
-}
-#menu-buttons button:active { transform: translateY(4px); box-shadow: 0 0 #B8860B; }
-#menu-buttons button:hover { background: #FFC700; }
+#menu-buttons { display:flex; justify-content:center; gap:10px; margin-top:15px; }
+#menu-buttons button { padding:15px 25px; font-size:18px; font-weight:bold; border:none; border-radius:12px; cursor:pointer; min-width:130px; color:black; background:#FFD700; transform:translateY(0); transition: transform 0.1s, background 0.1s; box-shadow:0 4px #B8860B; }
+#menu-buttons button:active { transform:translateY(4px); box-shadow:0 0 #B8860B; }
+#menu-buttons button:hover { background:#FFC700; }
 
 /* SUB BUTTONS */
-#sub-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 10px;
-}
-#sub-buttons button {
-  padding: 15px 60px;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  color: black;
-  background: #FFD700;
-  transform: translateY(0);
-  transition: transform 0.1s, background 0.1s;
-  box-shadow: 0 4px #B8860B;
-}
-#sub-buttons button:active { transform: translateY(4px); box-shadow:0 0 #B8860B; }
-#sub-buttons button:hover { background: #FFC700; }
+#sub-buttons { display:flex; justify-content:center; gap:20px; margin-top:10px; }
+#sub-buttons button { padding:15px 60px; font-size:18px; font-weight:bold; border:none; border-radius:12px; cursor:pointer; color:black; background:#FFD700; transform:translateY(0); transition: transform 0.1s, background 0.1s; box-shadow:0 4px #B8860B; }
+#sub-buttons button:active { transform:translateY(4px); box-shadow:0 0 #B8860B; }
+#sub-buttons button:hover { background:#FFC700; }
 
+/* PROGRESS BAR */
 #progress-container {
   width: 80%;
   height: 25px;
   background: rgba(255,255,255,0.2);
-  border-radius: 12px;
-  margin: 10px auto;
-  overflow: hidden;
+  border-radius:12px;
+  margin:10px auto;
+  overflow:hidden;
 }
 #progress-bar {
-  width: 0%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    45deg,
-    #FFD700 0px,
-    #FFD700 5px,
-    #FFEC8B 5px,
-    #FFEC8B 10px
-  );
-  background-size: 20px 20px;
-  animation: moveStripe 1s linear infinite;
-  border-radius: 12px;
+  width:0%;
+  height:100%;
+  border-radius:12px;
+  background: linear-gradient(90deg,#FFD700,#FFEC8B);
+  box-shadow:0 0 10px #FFD700 inset;
   transition: width 0.2s;
 }
-@keyframes moveStripe { 0% { background-position:0 0;} 100% { background-position:20px 0;} }
 
 /* INVENTORY POPUP */
 #inventory-popup {
-  position: fixed;
+  position:fixed;
   top:50%;
   left:50%;
-  transform:translate(-50%, -50%);
+  transform:translate(-50%,-50%);
   width:80%;
   max-width:500px;
   height:60%;
   background: rgba(0,0,0,0.9);
-  border: 3px solid #FFD700;
-  border-radius: 15px;
+  border:3px solid #FFD700;
+  border-radius:15px;
   padding:15px;
   display:flex;
-  flex-direction: column;
+  flex-direction:column;
   z-index:9999;
 }
 #inventory-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
@@ -204,10 +145,8 @@ html, body {
   display:flex;
   justify-content:center;
   align-items:center;
-  font-weight:bold;
-  color:white;
-  font-size:16px;
 }
+.inv-slot img { width:40px; height:40px; object-fit:contain; }
 </style>
 </head>
 <body>
@@ -301,16 +240,7 @@ function updateUI(){
   moneyText.innerText = money;
   levelText.innerText = level;
   const target = getLevelTarget(level+1);
-  progressBar.style.width = Math.min((stone/target)*100, 100) + "%";
-  statusBarEffect();
-}
-
-function statusBarEffect(){
-  const statusBar = document.getElementById("status");
-  statusBar.classList.remove("level-up");
-  if(stone >= getLevelTarget(level+1)){
-    statusBar.classList.add("level-up");
-  }
+  progressBar.style.width = Math.min((stone/target)*100,100)+"%";
 }
 
 function getLevelTarget(lvl){ return 10 + lvl*5; }
@@ -320,7 +250,11 @@ function renderInventory(){
   for(let i=0;i<20;i++){
     const slot = document.createElement("div");
     slot.className="inv-slot";
-    if(inventory[i]) slot.innerText = `${inventory[i].type} x${inventory[i].qty}`;
+    if(inventory[i]){
+      const img = document.createElement("img");
+      img.src = "https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Stone.png";
+      slot.appendChild(img);
+    }
     invGrid.appendChild(slot);
   }
 }
@@ -336,7 +270,6 @@ function addStoneToInventory(){
 rock.onclick = () => {
   stone += 1;
   
-  // floating
   const float = document.createElement("div");
   float.className="floating-text";
   float.innerText="+1 Stone";
@@ -358,7 +291,6 @@ rock.onclick = () => {
   
   updateUI();
   
-  // simpan ke firebase
   set(ref(db, 'users/'+uid+'/stone'), stone);
   set(ref(db, 'users/'+uid+'/level'), level);
   set(ref(db, 'users/'+uid+'/inventory'), inventory);
