@@ -8,7 +8,7 @@ html, body {
   margin:0;
   padding:0;  
   width:100%;  
-  height:100%;  
+  height:100dvh;  
   overflow:hidden;
   touch-action:manipulation
   font-family: Arial;  
@@ -19,8 +19,6 @@ html, body {
   min-height: 100vh;
   background: url('https://raw.githubusercontent.com/MNEFSID/Mining-Clicker/refs/heads/main/Main.png') no-repeat center center fixed;
   background-size: cover;
-  position: fixed;
-  inset: 0;
 }
   
 /* STATUS BAR */
@@ -29,7 +27,7 @@ html, body {
   
   margin:15px auto;
   
-  padding:10px 20px;
+  padding:8px 12px;
   
   border:3px solid white;
   
@@ -39,9 +37,9 @@ html, body {
   
   justify-content:center;
   
-  gap:30px;
+  gap:15px;
   
-  font-size:18px;
+  font-size:14px;
   
   background: rgba(0,0,0,0.5);
   
@@ -199,19 +197,19 @@ html, body {
   
 #menu-buttons button {
   
-  padding:20px 30px;
+  padding:12px 18px;
   
-  font-size:20px;
+  font-size:14px;
   
   font-weight:bold;
   
   border:none;
   
-  border-radius:20px;
+  border-radius:15px;
   
   cursor:pointer;
   
-  min-width:140px;
+  min-width:100px;
   
   color:white;
   
@@ -346,6 +344,9 @@ html, body {
   #menu-buttons {
   padding-bottom: 20px;
   }
+  #menu-buttons {
+  padding-bottom: 25px;
+    }
   }
   
 </style></head><body><div id="status">  <div>🪨 Stone: <span id="stone">0</span></div>  <div>💰 $: <span id="money" class="money">0</span></div>  <div>⭐ Level: <span id="level">0</span></div></div><div id="progress-container">  <div id="progress-bar"></div></div><div id="rock-container">  <div id="rock" class="idle"></div></div><div id="menu-buttons"><button onclick="toggleInventory()">Inventory</button>
@@ -492,20 +493,19 @@ function updateUI() {
 // ambil data user
   
 get(ref(db, 'users/' + uid)).then(snapshot => {
-  
   if (snapshot.exists()) {
-  
     const data = snapshot.val();
-  
+
     stone = data.stone || 0;
-    totalStone = data.totalStone || 0;
+
+    // 🔥 FIX: kalau totalStone belum ada, ambil dari stone
+    totalStone = (data.totalStone !== undefined) ? data.totalStone : stone;
+
     money = data.money || 0;
     level = data.level || 0;
-  
+
     updateUI();
-  
   }
-  
 });
   
 
