@@ -181,6 +181,40 @@ html, body {
   padding: 15px;
   border-radius: 10px;
   }
+  /* KARTU TENGAH */
+#rock-card {
+  width: 250px;
+  height: 250px;
+
+  /* gabungan style */
+  background: #eaeaea; /* dari yang kedua */
+  padding: 10px;
+
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(255,255,255,0.2);
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transition: 0.2s;
+}
+
+/* efek klik */
+#rock-card:active {
+  transform: scale(0.95);
+}
+
+/* bagian batu */
+#rock {
+  background-color: #fff;
+  border-radius: 10px;
+  }
+  #rock-card:hover {
+  transform: scale(1.05);
+  }
 </style>
 </head>
 <body>
@@ -196,7 +230,9 @@ html, body {
 </div>
 
 <div id="rock-container">
-  <div id="rock" class="idle"></div>
+  <div id="rock-card">
+    <div id="rock" class="idle"></div>
+  </div>
 </div>
 
 <div id="menu-buttons">
